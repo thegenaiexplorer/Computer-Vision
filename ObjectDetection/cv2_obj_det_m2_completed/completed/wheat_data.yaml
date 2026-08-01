@@ -1,0 +1,5 @@
+names:
+  0: wheat_head
+path: /home/ubuntu/wip/wheat_dataset
+train: train/images
+val: valid/images
