@@ -1,0 +1,14 @@
+Procedure gradcam
+--------------------
+1) Train the model.
+2) Take an image and pass it through model.
+3) Take the label. Do a backward prop on that.
+4) Get the gradient maps at desired resolution level. (1,c,h,w).
+5) Now calculate feature map wise mean of gradient maps- so it becomes c,1,1
+6) Get the activation map at same resolution level (1,c,h,w).
+7) Multiply output of step 5 with step 6. This will brighten up the maps where gradients are stronger.(1, c,h,w)
+8) Now take channel wise mean of output from step 7, ie, for each pixel calculate mean of all pixel values at same coordinate. resulting shape will be 1, 1, h, w. This is your heatmap
+9) Pass the output from step 8 and pass it through ReLU so that any negative values are dropped.
+10) Normalize the output from step 9 by dividing it by max value in heatmap so that all values are between 0 and 1
+11) Resize the heatmap from step 10 to size of original image.
+12) Take the original image and superimpose heatmap on top of it. This is your gradcam which tells the model focuses on which part most when deciding on the final label.
